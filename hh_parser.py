@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from vacancy import Vacancy
-from contsants import ACCESS_TOKEN, DATABASE_URL
+from constants import ACCESS_TOKEN, DATABASE_URL
 import re
 
 QUERIES = [
