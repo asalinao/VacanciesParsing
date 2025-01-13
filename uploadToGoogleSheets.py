@@ -11,7 +11,6 @@ client = clickhouse_connect.get_client(host='localhost', username='default', pas
 query = "SELECT * FROM vacancies"
 df = client.query_df(query)
 
-df.drop('id', axis=1, inplace=True)
 df = df.fillna('')
 for column in df.select_dtypes(include=[np.datetime64, 'datetime']):
     df[column] = df[column].dt.strftime('%Y-%m-%d %H:%M:%S')
