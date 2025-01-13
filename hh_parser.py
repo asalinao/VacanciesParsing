@@ -19,7 +19,6 @@ QUERIES = [
 ]
 
 COLUMNS = [
-    "id",
     "vacancy_id",
     "field",
     "name",
