@@ -61,7 +61,7 @@ for query_string in QUERIES:
     for item in vacancies_from_response:
         for vacancy in item:
             vacancy_id = vacancy['id']
-            if client.query(f"SELECT count(*) FROM headhunter.vacancies WHERE vacancy_id={vacancy['id']}")[0][0] > 0:
+            if client.query(f"SELECT count(*) FROM vacancies WHERE vacancy_id={vacancy['id']}")[0][0] > 0:
                 continue
             name = vacancy['name'].replace("'", "").replace('"', '')
             has_test = int(vacancy['has_test'])
@@ -133,5 +133,5 @@ for query_string in QUERIES:
                 pos_level
             ]
 
-            client.insert('headhunter.vacancies', new_vacancy, column_names=COLUMNS)
+            client.insert('vacancies', new_vacancy, column_names=COLUMNS)
 client.close()
