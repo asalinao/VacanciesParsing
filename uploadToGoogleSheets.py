@@ -13,7 +13,7 @@ def upload_vacancies():
     client.close()
 
     df = df.fillna('')
-    print(df.info())
+    
     df['published_at'] = df['published_at'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
     creds = ServiceAccountCredentials.from_json_keyfile_name("hhvacancy-04d0d07b0d5b.json", scope)
