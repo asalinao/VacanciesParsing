@@ -116,7 +116,7 @@ for query_string in QUERIES:
             else:
                 pos_level = None
 
-            new_vacancy = [
+            new_vacancy = [[
                 vacancy_id,
                 field,
                 name,
@@ -130,7 +130,7 @@ for query_string in QUERIES:
                 employer_name,
                 schedule,
                 pos_level
-            ]
+            ]]
 
             client.insert('vacancies', new_vacancy, column_names=COLUMNS)
 client.close()
