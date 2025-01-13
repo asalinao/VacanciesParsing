@@ -1,5 +1,7 @@
 # Парсер вакансий с hh.ru
 Этот проект предназначен для автоматического сбора, обработки и загрузки вакансий с сайта hh.ru в базу данных ClickHouse и последующего экспорта данных в Google Sheets. Основная область применение — аналитика вакансий в сфере IT.
+
+**[Пример дэшборда в Tableau](https://public.tableau.com/views/hh_ru_vacancies/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)**
 ## Основные функции
 ### 1. Сбор вакансий
 - Скрипт отправляет запросы к API hh.ru по списку предопределенных запросов (например, "Бизнес аналитик", "Data scientist").
