@@ -12,7 +12,7 @@ query = "SELECT * FROM vacancies"
 df = client.query_df(query)
 
 df = df.fillna('')
-
+print(df.info())
 for column in df.select_dtypes(include=[np.datetime64, 'datetime64']):
     df[column] = df[column].dt.strftime('%Y-%m-%d %H:%M:%S')
 
