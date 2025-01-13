@@ -13,8 +13,7 @@ df = client.query_df(query)
 
 df = df.fillna('')
 print(df.info())
-for column in df.select_dtypes(include=[np.datetime64, 'datetime64']):
-    df[column] = df[column].dt.strftime('%Y-%m-%d %H:%M:%S')
+df['published_at'] = df['published_at'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
 creds = ServiceAccountCredentials.from_json_keyfile_name("hhvacancy-04d0d07b0d5b.json", scope)
 client = gspread.authorize(creds)
