@@ -29,6 +29,8 @@ def upload_vacancies():
 
     worksheet.update([df.columns.values.tolist()] + df.values.tolist(), range_of_cells)
 
+    print(f'{end_row} строк обновлено')
+
 
 
 
