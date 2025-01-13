@@ -4,32 +4,31 @@ import pandas as pd
 from oauth2client.service_account import ServiceAccountCredentials
 import numpy as np
 
-client = clickhouse_connect.get_client(host='localhost', username='default', password='a', port='8123', )
-
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
-def update_sheet():
-    query = "SELECT * FROM vacancies"
-    df = client.query_df(query)
+client = clickhouse_connect.get_client(host='localhost', username='default', password='a', port='8123')
 
-    df.drop('id', axis=1, inplace=True)
-    df = df.fillna('')
-    for column in df.select_dtypes(include=[np.datetime64, 'datetime']):
-        df[column] = df[column].dt.strftime('%Y-%m-%d %H:%M:%S')
+query = "SELECT * FROM vacancies"
+df = client.query_df(query)
 
-    creds = ServiceAccountCredentials.from_json_keyfile_name("hhvacancy-04d0d07b0d5b.json", scope)
-    client = gspread.authorize(creds)
+df.drop('id', axis=1, inplace=True)
+df = df.fillna('')
+for column in df.select_dtypes(include=[np.datetime64, 'datetime']):
+    df[column] = df[column].dt.strftime('%Y-%m-%d %H:%M:%S')
 
-    spreadsheet = client.open("hh_vacancies")
-    worksheet = spreadsheet.sheet1
+creds = ServiceAccountCredentials.from_json_keyfile_name("hhvacancy-04d0d07b0d5b.json", scope)
+client = gspread.authorize(creds)
 
-    start_row = 1
-    end_row = len(df) + 1
+spreadsheet = client.open("hh_vacancies")
+worksheet = spreadsheet.sheet1
 
-    range_of_cells = f"A{start_row}:M{end_row}"
+start_row = 1
+end_row = len(df) + 1
 
-    worksheet.update([df.columns.values.tolist()] + df.values.tolist(), range_of_cells)
-    print(f'{end_row} строк обновлено')
+range_of_cells = f"A{start_row}:M{end_row}"
 
-update_sheet()
+worksheet.update([df.columns.values.tolist()] + df.values.tolist(), range_of_cells)
+print(f'{end_row} строк обновлено')
+
+
 
