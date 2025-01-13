@@ -91,7 +91,8 @@ for query_string in QUERIES:
                 salary_currency = None
 
             published_at = vacancy['published_at']
-            published_at = datetime.strptime(published_at, '%Y-%m-%dT%H:%M:%S%z').strftime('%Y-%m-%d %H:%M:%S')
+            published_at = datetime.strptime(published_at, '%Y-%m-%dT%H:%M:%S%z')
+            
             employer_name = vacancy['employer']['name'].replace("'", "").replace('"', '')
 
             try:
