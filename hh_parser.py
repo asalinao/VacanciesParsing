@@ -1,9 +1,7 @@
 import requests
 from datetime import datetime
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from vacancy import Vacancy
-from constants import ACCESS_TOKEN, DATABASE_URL
+import clickhouse_connect
+from constants import ACCESS_TOKEN
 import re
 
 QUERIES = [
@@ -20,9 +18,25 @@ QUERIES = [
     'Deep Learning engineer',
 ]
 
-engine = create_engine(DATABASE_URL)
-Session = sessionmaker(bind=engine)
-session = Session()
+COLUMNS = [
+    "id",
+    "vacancy_id",
+    "field",
+    "name",
+    "has_test",
+    "address_city",
+    "alternate_url",
+    "salary_from",
+    "salary_to",
+    "salary_currency",
+    "published_at",
+    "employer_name",
+    "schedule",
+    "pos_level"
+]
+
+
+client = clickhouse_connect.get_client(host='localhost', username='default', password='a', port='9000', database='headhunter')
 
 for query_string in QUERIES:
     url = 'https://api.hh.ru/vacancies'
@@ -47,7 +61,7 @@ for query_string in QUERIES:
     for item in vacancies_from_response:
         for vacancy in item:
             vacancy_id = vacancy['id']
-            if session.query(Vacancy).filter_by(vacancy_id=vacancy_id).first():
+            if client.query(f"SELECT count(*) FROM vacancies WHERE vacancy_id={vacancy['id']}")[0][0] > 0:
                 continue
             name = vacancy['name'].replace("'", "").replace('"', '')
             has_test = int(vacancy['has_test'])
@@ -103,21 +117,21 @@ for query_string in QUERIES:
             else:
                 pos_level = None
 
-            new_vacancy = Vacancy(
-                vacancy_id=vacancy_id,
-                field=field,
-                name=name,
-                has_test=has_test,
-                address_city=address_city,
-                alternate_url=alternate_url,
-                salary_from=salary_from,
-                salary_to=salary_to,
-                salary_currency=salary_currency,
-                published_at=published_at,
-                employer_name=employer_name,
-                schedule=schedule,
-                pos_level=pos_level
-            )
+            new_vacancy = [
+                vacancy_id,
+                field,
+                name,
+                has_test,
+                address_city,
+                alternate_url,
+                salary_from,
+                salary_to,
+                salary_currency,
+                published_at,
+                employer_name,
+                schedule,
+                pos_level
+            ]
 
-            session.add(new_vacancy)
-    session.commit()
+            client.insert('vacancies', new_vacancy, column_names=COLUMNS)
+client.close()
