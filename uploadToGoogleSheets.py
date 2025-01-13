@@ -4,7 +4,7 @@ import pandas as pd
 from oauth2client.service_account import ServiceAccountCredentials
 import numpy as np
 
-client = clickhouse_connect.get_client(host='localhost', username='default', password='a', port='8123', database='headhunter')
+client = clickhouse_connect.get_client(host='localhost', username='default', password='a', port='9000', database='headhunter')
 
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 

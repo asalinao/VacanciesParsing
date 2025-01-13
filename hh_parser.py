@@ -36,7 +36,7 @@ COLUMNS = [
 ]
 
 
-client = clickhouse_connect.get_client(host='localhost', username='default', password='a', port='8123', database='headhunter')
+client = clickhouse_connect.get_client(host='localhost', username='default', password='a', port='9000', database='headhunter')
 
 for query_string in QUERIES:
     url = 'https://api.hh.ru/vacancies'
