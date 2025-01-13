@@ -12,8 +12,9 @@ query = "SELECT * FROM vacancies"
 df = client.query_df(query)
 
 df = df.fillna('')
+print(df.info())
 for column in df.select_dtypes(include=[np.datetime64, 'datetime']):
-    df[column] = df[column].apply(lambda x: x.strftime('%Y-%m-%d %H:%M:%S') if isinstance(x, pd.Timestamp) else x)
+    df[column] = df[column].dt.strftime('%Y-%m-%d %H:%M:%S')
 
 creds = ServiceAccountCredentials.from_json_keyfile_name("hhvacancy-04d0d07b0d5b.json", scope)
 client = gspread.authorize(creds)
