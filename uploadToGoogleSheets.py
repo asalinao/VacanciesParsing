@@ -16,7 +16,7 @@ def upload_vacancies():
     
     df['published_at'] = df['published_at'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
-    creds = ServiceAccountCredentials.from_json_keyfile_name("hhvacancy-04d0d07b0d5b.json", scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name("/root/hh_vacancies/hhvacancy-04d0d07b0d5b.json", scope)
     client = gspread.authorize(creds)
 
     spreadsheet = client.open("hh_vacancies")
