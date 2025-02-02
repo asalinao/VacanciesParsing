@@ -42,6 +42,3 @@ def upload_vacancies():
 
     clickhouse_client.close()
     print(f'Всего обновлено {total_rows} строк')
-
-
-

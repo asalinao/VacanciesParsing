@@ -135,3 +135,5 @@ def get_vacancies():
 
                 client.insert('vacancies', new_vacancy, column_names=COLUMNS)
     client.close()
+
+get_vacancies()
