@@ -60,7 +60,7 @@ def get_vacancies():
         for item in vacancies_from_response:
             for vacancy in item:
                 vacancy_id = vacancy['id']
-                if client.command(f"SELECT count() FROM vacancies WHERE vacancy_id={vacancy_id}") > 0:
+                if client.command(f"SELECT EXISTS(SELECT 1 FROM vacancies WHERE vacancy_id = {vacancy_id})") > 0:
                     continue
                 name = vacancy['name'].replace("'", "").replace('"', '')
                 has_test = int(vacancy['has_test'])
