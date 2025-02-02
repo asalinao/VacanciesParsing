@@ -40,5 +40,5 @@ def upload_vacancies():
         total_rows += len(df)
         print(f'{len(df)} строк обновлено')
 
-    clickhouse_client.close()
+        clickhouse_client.close()
     print(f'Всего обновлено {total_rows} строк')
