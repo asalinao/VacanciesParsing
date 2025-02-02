@@ -36,6 +36,7 @@ COLUMNS = [
 
 def get_vacancies():
     client = clickhouse_connect.get_client(host='localhost', username='default', password='a', port='8123')
+    vacancies_list = []
 
     for query_string in QUERIES:
         url = 'https://api.hh.ru/vacancies'
@@ -117,7 +118,7 @@ def get_vacancies():
                 else:
                     pos_level = None
 
-                new_vacancy = [[
+                new_vacancy = [
                     vacancy_id,
                     field,
                     name,
@@ -131,9 +132,9 @@ def get_vacancies():
                     employer_name,
                     schedule,
                     pos_level
-                ]]
+                ]
 
-                client.insert('vacancies', new_vacancy, column_names=COLUMNS)
+                vacancies_list.append(new_vacancy)
+
+    client.insert('vacancies', vacancies_list, column_names=COLUMNS)
     client.close()
-
-get_vacancies()
