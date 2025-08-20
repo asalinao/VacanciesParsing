@@ -2,6 +2,8 @@
 Этот проект предназначен для автоматического сбора, обработки и загрузки вакансий с сайта hh.ru в базу данных ClickHouse и последующего экспорта данных в Google Sheets. Основная область применение — аналитика вакансий в сфере IT.
 
 **[Пример дэшборда в Tableau](https://public.tableau.com/views/hh_ru_vacancies/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)**
+<img width="1720" height="842" alt="image" src="https://github.com/user-attachments/assets/a3406949-646f-4777-9977-952c0c12004d" />
+
 ## Основные функции
 ### 1. Сбор вакансий
 - Скрипт отправляет запросы к API hh.ru по списку предопределенных запросов (например, "Бизнес аналитик", "Data scientist").
